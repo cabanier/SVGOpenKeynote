@@ -399,7 +399,43 @@
 </script>                        
                     </section>
                     <section>
-                    <video width="640px" height="480px" poster="assets/images/ducky.png"></video>
+                            <style>
+                                #logo-parent {
+                                    -webkit-filter: grayscale(1);
+                                    -webkit-transition: -webkit-filter ease-in-out 1s;
+                                }
+                                #html5-logo {
+                                    -webkit-filter: custom(url('assets/shaders/wobble.vs'), 40 40 content-box, amplitude 60, amount 0, angle 20);
+                                    -webkit-transition: -webkit-filter ease-in-out 2s;
+                                }
+
+                                #html5-logo:hover {
+                                   -webkit-filter: custom(url('assets/shaders/wobble.vs'), 40 40 content-box, amplitude 60, amount 1.0, angle 40);
+                                }
+                                
+                                #logo-parent:hover {
+                                    -webkit-filter: grayscale(0);
+                                }
+                                                    
+                                        </style>
+                    <div id="logo-parent" style="position: relative; top: -50%;">     
+                    <video class="plain" id="html5-logo" width="640px" height="480px" poster="assets/images/ducky.png"></video>
+                    </div>
+<script>
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+
+video = document.getElementById("live")
+
+      navigator.getUserMedia("video",
+          function(stream) {
+            video.src = window.URL.createObjectURL(stream)
+          },
+          function(err) {
+            console.log("Unable to get video stream!")
+          }
+      )
+</script>                    
                     </section>
                 </section>
 				
