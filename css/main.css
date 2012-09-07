@@ -1029,6 +1029,29 @@ h2.stamp-public-prototype::before {
 	        transform: none;
 }
 
+.filter-image {
+  width: 120px;
+  height: 90px;
+  background-image: url(../assets/images/ducky.png);
+  background-size: 120px 90px;
+  border: none; }
+
+.filter-shorthand.code {
+  font-weight: bold;
+  font-size: 0.4em;
+  margin-top: 0.25em; }
+
+.filter-sample .frame {
+  border: 0.25em solid white;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25); }
+
+.filter-sample {
+  float: left;
+  margin-left: 1em; }
+
+.filter-sample:first-child {
+  margin-left: 0em; }
+
 
 /*********************************************
  * DEFAULT STATES
@@ -1055,6 +1078,7 @@ h2.stamp-public-prototype::before {
 .blackout .state-background {
 	background: rgba( 0, 0, 0, 0.6 );
 }
+
 
 
 /*********************************************
