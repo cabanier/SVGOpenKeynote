@@ -422,20 +422,33 @@
                     <video class="plain" id="html5-logo" width="640px" height="480px" poster="assets/images/ducky.png"></video>
                     </div>
 <script>
+function init() {
+    video = document.getElementById('html5-logo');
+    
+    // Get the stream from the camera using getUserMedia
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-
-
-video = document.getElementById("html5-logo");
-
-      navigator.getUserMedia("video",
-          function(stream) {
-            video.src = window.URL.createObjectURL(stream);
-          },
-          function(err) {
-            console.log("Unable to get video stream!")
-          }
-      )
+    if (navigator.getUserMedia) {
+        // This beautiful hack for the options is from @kanasansoft:
+        // http://www.kanasansoft.com/weblab/2012/06/arguments_of_getusermedia.html
+        var gumOptions = {video: true, toString: function(){return 'video';}};
+        navigator.getUserMedia(gumOptions, successCallback, errorCallback);
+        function successCallback(stream) {
+            // Replace the source of the video element with the stream from the camera
+            video.src = window.URL.createObjectURL(stream) || stream;
+            video.play();
+        }
+        function errorCallback(error) {
+            console.error('An error occurred: [CODE ' + error.code + ']');
+            video.play();
+        }
+    } else {
+        var errorMsg = '<p class="error">Uh oh, it appears your browser doesn\'t support this feature.<br>Please try with a <a href="http://www.opera.com/next/">browser that has camera support</a>.</p>';
+        //document.querySelector('[role=main]').innerHTML = errorMsg;
+        console.log('Native web camera streaming (getUserMedia) is not supported in this browser.');
+        video.play();
+    }
+}
 </script>                    
                     </section>
                 </section>
