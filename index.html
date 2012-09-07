@@ -403,7 +403,7 @@
                     <h2 class="stamp-available">shorthand filters<br/><span class="code small">filter: &lt;short-hand-function&gt;(&lt;params&gt;)</span></h2>
                     <div>
                     	<div class="filter-sample  ">
-        			    	<div class="frame"><video width="120px" height="90px" class="filter-image" onclick="filters_init()"></video></div>
+        			    	<div class="frame"><video width="120px" height="90px" id="filter-source" class="filter-image" onclick="filters_init()"></video></div>
         			        <p class="filter-shorthand code">original</p>
         			    </div>
         			    <div class="filter-sample  ">
@@ -451,7 +451,7 @@
 var canvases = document.getElementsByClassName('filter-test');
 
 function filters_init() {
-    video = document.getElementById('html5-logo');
+    video = document.getElementById('filter-source');
     
     // Get the stream from the camera using getUserMedia
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
