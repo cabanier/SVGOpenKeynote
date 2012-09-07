@@ -399,7 +399,7 @@
         })();
 </script>                        
                     </section>
-                    <section>
+                    <section data-state="shorthands-filters">
                     <h2 class="stamp-available">shorthand filters<br/><span class="code small">filter: &lt;short-hand-function&gt;(&lt;params&gt;)</span></h2>
                     <div>
                     	<div class="filter-sample  ">
@@ -488,6 +488,7 @@ function filters_init() {
 	}
 }
 //window.onload = init;
+
 </script>   
                     </section>
                     <section>
@@ -510,43 +511,41 @@ function filters_init() {
                                 }
                                                     
                                         </style>
+                        <h2 class="stamp-available">css shader filter<br />
+                        <span class="code">filter: custom(...)</span></h2>                                        
                     <div id="logo-parent" style="position: relative; top: -50%;">     
-                    <video class="plain" id="html5-logo" width="640px" height="480px" poster="assets/images/ducky.png"></video>
-                    </div>
-
-    <span id="toggle-video" class="prompt button" style="display:inline-block;width:15ex">toggle webcam</span>
-
-<script>
-function init() {
-    video = document.getElementById('html5-logo');
-    
-    // Get the stream from the camera using getUserMedia
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-    if (navigator.getUserMedia) {
-        // This beautiful hack for the options is from @kanasansoft:
-        // http://www.kanasansoft.com/weblab/2012/06/arguments_of_getusermedia.html
-        var gumOptions = {video: true, toString: function(){return 'video';}};
-        navigator.getUserMedia(gumOptions, successCallback, errorCallback);
-        function successCallback(stream) {
-            // Replace the source of the video element with the stream from the camera
-            video.src = window.URL.createObjectURL(stream) || stream;
-            video.play();
-        }
-        function errorCallback(error) {
-            console.error('An error occurred: [CODE ' + error.code + ']');
-            video.play();
-        }
-    } else {
-        var errorMsg = '<p class="error">Uh oh, it appears your browser doesn\'t support this feature.<br>Please try with a <a href="http://www.opera.com/next/">browser that has camera support</a>.</p>';
-        //document.querySelector('[role=main]').innerHTML = errorMsg;
-        console.log('Native web camera streaming (getUserMedia) is not supported in this browser.');
-        video.play();
-    }
-}
-//window.onload = init;
-</script>                    
+                    <img class="plain" id="html5-logo" src="assets/images/html5-logo.svg" width="50%">
+                    </div>                  
                     </section>
+                    <section>
+        			    <h2>css shaders model</h2>
+
+                        <div style="-webkit-blend-mode: multiply;">
+                        <div class="zoom">
+            			    <img id="shader-model" class="plain" src="assets/images/shader-model.png" width="800"
+            			        style="box-shadow: none;border: none;border-radius: 0px;-webkit-transition-property:none; margin: 20px; padding: 20px;"/>
+        			    </div>
+        			    </div>                    
+                    </section>
+                    <section>
+        			    <h2>shaders - vertex flow<br/>
+                        <span class="code small">manipulate the surface by specifying:</span></h2>
+                        <ol>
+                        	<li>the area that the vertex mesh applies to</li>
+                        	<li>the number of vertex rows and columns</li>
+                            <li>a shader programs that deforms the mesh points</li>
+                        </ol>  
+                        <style>
+						#vertex-shader{
+                          -webkit-filter: custom(url('assets/shaders/one-fold-3.vs'), 10 10 content-box, amount 0);
+                          -webkit-transition: -webkit-filter ease-in-out 2s;
+                        }
+						#vertex-shader:hover{
+                          -webkit-filter: custom(url('assets/shaders/one-fold-3.vs'), 10 10 content-box, amount 2);
+                        }
+						</style>
+                        <img id="vertex-shader" class="plain" src="assets/images/picture.svg">                                 
+                    </section>                    
                 </section>
 				
 			</div>
@@ -590,6 +589,14 @@ function init() {
 				]
 			});
 			
+			Reveal.addEventListener( 'shorthands-filters', function( event ) { filters_init(); } );
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+				var videos = document.getElementsByTagName("video");
+				for (i=0;i<videos.length;i++) {
+					videos[i].src = "";
+					videos[i].pause();	
+				}				
+			});
 		</script>
 
 	</body>

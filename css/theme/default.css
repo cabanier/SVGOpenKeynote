@@ -171,3 +171,7 @@ body {
 	}
 
 
+img.plain,  img.plain:hover {
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important; }
