@@ -425,11 +425,12 @@
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 
-video = document.getElementById("live")
+
+video = document.getElementById("html5-logo");
 
       navigator.getUserMedia("video",
           function(stream) {
-            video.src = window.URL.createObjectURL(stream)
+            video.src = window.URL.createObjectURL(stream);
           },
           function(err) {
             console.log("Unable to get video stream!")
