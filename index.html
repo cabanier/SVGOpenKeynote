@@ -450,6 +450,7 @@
                         </div> 
 <script>
 var canvases = document.getElementsByClassName('filter-test');
+IntervalID = 0;
 
 function filters_init() {
     video = document.getElementById('filter-source');
@@ -466,26 +467,25 @@ function filters_init() {
             // Replace the source of the video element with the stream from the camera
             video.src = window.URL.createObjectURL(stream) || stream;
             video.play();
-			setInterval(processFrame, 33);
+			IntervalID = setInterval(processFrame, 33);
         }
         function errorCallback(error) {
             console.error('An error occurred: [CODE ' + error.code + ']');
             video.play();
-			setInterval(processFrame, 33);
         }
     } else {
         var errorMsg = '<p class="error">Uh oh, it appears your browser doesn\'t support this feature.<br>Please try with a <a href="http://www.opera.com/next/">browser that has camera support</a>.</p>';
         //document.querySelector('[role=main]').innerHTML = errorMsg;
         console.log('Native web camera streaming (getUserMedia) is not supported in this browser.');
         video.play();
-		setInterval(processFrame, 33);
     }
 	
 	function processFrame() {
-		for (i=0;i<canvases.length;i++) {
-			copy = canvases[i].getContext('2d');
-			copy.drawImage(video, 0, 0, 120, 90);
-		}		
+		if(IntervalID)
+			for (i=0;i<canvases.length;i++) {
+				copy = canvases[i].getContext('2d');
+				copy.drawImage(video, 0, 0, 120, 90);
+			}		
 	}
 }
 //window.onload = init;
@@ -520,7 +520,7 @@ custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multi
                         	</div>
                         </div>
                     </section>
-                    <section>
+                    <section data-state='vertex-sample-before'>
         			    <h2>css shaders model</h2>
 
                         <div style="-webkit-blend-mode: multiply;">
@@ -530,7 +530,7 @@ custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multi
         			    </div>
         			    </div>                    
                     </section>
-                    <section>
+                    <section data-state="vertex-sample">
         			    <h2>shaders - vertex flow<br/>
                         <span class="code small">manipulate the surface by specifying:</span></h2>
                         <ol>
@@ -560,9 +560,9 @@ custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multi
 						}
 												
 						</style>
-                        <img id="vertex-shader" class="plain" src="assets/images/html5-logo.svg">                                 
+                        <img id="vertex-shader" class="plain" src="assets/images/html5-logo.svg" style="display:none">                                 
                     </section>  
-                    <section>
+                    <section data-state='vertex-sample-before'>
                     	<h2>shaders - pixel flow</h2>
                         <p>After creating the mesh, a shader could examine the pixels in the filter region</p>
                         <div class="fragment">
@@ -598,12 +598,20 @@ custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multi
                      <section>
                     	<h2>Is a pixel shader still useful?</h2>
                         <p><strong>YES!</strong></p>
-                        <ol>
-                        	<li>Compile the shader</li>
-                            <li>Examine the data flow</li>
-                            <li>If a decision is made based on a pixel value, the shader is rejected</li>
-                        </ol>
-                     </section>          
+                        <ul>
+                        	<li>Information can be passed from vertex shaders</li>
+                            <li>Mix() function:
+                            	<ul>
+                                	<li>allows blending and compositing of pixel data with a color</li>
+                                    <li>specifies a color matrix</li>
+                                </ul>
+                            </li>
+                        </ul>
+                     </section>  
+                     <section>
+                     	<h2>Pixel shader data flow</h2> 
+                     	<img src="assets/images/mix-fragment-shader.png">      
+                     </section>  
                 </section>
 				
 			</div>
@@ -647,13 +655,23 @@ custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multi
 				]
 			});
 			
-			Reveal.addEventListener( 'shorthands-filters', function( event ) { filters_init(); } );
+			Reveal.addEventListener( 'shorthands-filters', function( event ) { 
+					filters_init(); } 
+				);
+			Reveal.addEventListener( 'vertex-sample', function( event ) { 
+				document.getElementById('vertex-shader').style.display = 'inline-block';
+			});
+			Reveal.addEventListener( 'vertex-sample-before', function( event ) { 
+				document.getElementById('vertex-shader').style.display = 'none';
+			});
+				
 			Reveal.addEventListener( 'slidechanged', function( event ) {
 				var videos = document.getElementsByTagName("video");
 				for (i=0;i<videos.length;i++) {
 					videos[i].src = "";
 					videos[i].pause();	
-				}				
+				}
+				clearInterval(IntervalID);				
 			});
 		</script>
 
