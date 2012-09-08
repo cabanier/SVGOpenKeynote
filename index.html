@@ -399,7 +399,7 @@
         })();
 </script>                        
                     </section>
-                    <!--
+
                     <section data-state="shorthands-filters">
                     <h2 class="stamp-available">shorthand filters<br/><span class="code small">filter: &lt;short-hand-function&gt;(&lt;params&gt;)</span></h2>
                     <div>
@@ -492,32 +492,33 @@ function filters_init() {
 
 </script>   
                     </section>
-                    -->
                     <section>
                             <style>
-                                #logo-parent {
-                                    -webkit-filter: grayscale(1);
-                                    -webkit-transition: -webkit-filter ease-in-out 1s;
-                                }
-                                #html5-logo {
-                                    -webkit-filter: custom(url('assets/shaders/wobble.vs'), 40 40 content-box, amplitude 60, amount 0, angle 20);
+                                
+                                .reveal #html5-logo {
+                                    -webkit-filter:
+custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multiply source-atop), 50 50 border-box, transform rotateX(0deg) rotateY(0deg) rotateZ(0deg), amount 0, strength 0.2, lightIntensity 1.05);
                                     -webkit-transition: -webkit-filter ease-in-out 2s;
                                 }
 
-                                #html5-logo:hover {
-                                   -webkit-filter: custom(url('assets/shaders/wobble.vs'), 40 40 content-box, amplitude 60, amount 1.0, angle 40);
+                                .reveal #html5-logo:hover {
+                                    -webkit-filter:
+custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multiply source-atop), 50 50 border-box, transform rotateX(0deg) rotateY(0deg) rotateZ(0deg), amount 1, strength 0.2, lightIntensity 1.05);
                                 }
                                 
-                                #logo-parent:hover {
-                                    -webkit-filter: grayscale(0);
-                                }
+                                
                                                     
                                         </style>
                         <h2 class="stamp-available">css shader filter<br />
                         <span class="code">filter: custom(...)</span></h2>                                        
-                    <div id="logo-parent" style="position: relative; top: -50%;">     
-                    <img class="plain" id="html5-logo" src="assets/images/html5-logo.svg" width="50%">
-                    </div>                  
+                    <div class=" zoom" style="display: table; height: 600px; overflow: hidden;width: 100%;-webkit-blend-mode:multiply;-webkit-transform: translate3d(0, 0, 0);">
+                        	<div style="top: 50%;display: table-cell; vertical-align: middle;">
+                        		<div id="logo-parent" style="position: relative; top: -50%;">
+                        		    <img class="plain" id="html5-logo" src="assets/images/html5-logo.svg" width="50%">
+                                    <img class="plain" id="html5-logo" src="assets/images/html5-logo.svg" width="50%">
+                        		</div>
+                        	</div>
+                        </div>
                     </section>
                     <section>
         			    <h2>css shaders model</h2>
@@ -539,15 +540,70 @@ function filters_init() {
                         </ol>  
                         <style>
 						#vertex-shader{
-                          -webkit-filter: custom(url('assets/shaders/one-fold-3.vs'), 10 10 content-box, amount 0);
                           -webkit-transition: -webkit-filter ease-in-out 2s;
-                        }
-						#vertex-shader:hover{
-                          -webkit-filter: custom(url('assets/shaders/one-fold-3.vs'), 10 10 content-box, amount 2);
-                        }
+						  -webkit-animation-duration: 3s;
+   						  -webkit-animation-name: slidein;
+						  -webkit-animation-iteration-count: infinite;
+                          -webkit-animation-direction: alternate;
+						}
+ 
+						@-webkit-keyframes slidein {
+						  from {
+							-webkit-filter:
+						custom(url(shaders/vertex/fold.vs) mix(url(shaders/fragment/fold.fs) multiply source-atop), 40 8 border-box, matrix rotateX(0deg) rotateY(0deg) rotateZ(0deg), t 0, spins 0.5, phase -0.552, shadow 1.48, mapDepth 40, mapCurve -0.32, minSpacing 0.37, useColoredBack 1, backColor 0 0 0 0.4);
+						  }
+						 
+						  to {
+							-webkit-filter:
+						custom(url(shaders/vertex/fold.vs) mix(url(shaders/fragment/fold.fs) multiply source-atop), 40 8 border-box, matrix rotateX(0deg) rotateY(0deg) rotateZ(0deg), t 1, spins 0.5, phase -0.552, shadow 1.48, mapDepth 40, mapCurve -0.32, minSpacing 0.37, useColoredBack 1, backColor 0 0 0 0.4);
+						  }
+						}
+												
 						</style>
-                        <img id="vertex-shader" class="plain" src="assets/images/picture.svg">                                 
-                    </section>                    
+                        <img id="vertex-shader" class="plain" src="assets/images/html5-logo.svg">                                 
+                    </section>  
+                    <section>
+                    	<h2>shaders - pixel flow</h2>
+                        <p>After creating the mesh, a shader could examine the pixels in the filter region</p>
+                        <div class="fragment">
+                        <p class="subtitle">However, rendered content includes:</p>
+                        <ul>
+                        	<li>secure information</li>
+                            <li>third party information</li>
+                            <li>visited links</li>
+                        </ul>
+                        </div>
+                        <div class="fragment">
+                        <p class="">which results in a security leak...</p>
+                    </section>
+                    <section>
+                    	<h2>How is the information leaked?</h2>
+                        <ol>
+                        	<li>Read a pixel at a specific location</li>
+                            <li>Depending on the color, execute a function that is fast or slow</li>
+                            <li>Time the duration of a rendering pass</li>
+                            <li>Infer data</li>
+                        </ol>
+                    </section>
+                    <section>
+                    	<h2>How did we fix this?</h2>
+                        <p>We disallow access to the pixel data...</p>
+                        <p class="subtitle">We use the Angle library to:</p>
+                        <ol>
+                        	<li>Compile the shader</li>
+                            <li>Examine the data flow</li>
+                            <li>If a decision is made based on a pixel value, the shader is rejected</li>
+                        </ol>
+                     </section>
+                     <section>
+                    	<h2>Is a pixel shader still useful?</h2>
+                        <p><strong>YES!</strong></p>
+                        <ol>
+                        	<li>Compile the shader</li>
+                            <li>Examine the data flow</li>
+                            <li>If a decision is made based on a pixel value, the shader is rejected</li>
+                        </ol>
+                     </section>          
                 </section>
 				
 			</div>
