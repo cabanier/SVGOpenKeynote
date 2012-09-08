@@ -469,13 +469,11 @@ function filters_init() {
         }
         function errorCallback(error) {
             console.error('An error occurred: [CODE ' + error.code + ']');
-            video.play();
         }
     } else {
         var errorMsg = '<p class="error">Uh oh, it appears your browser doesn\'t support this feature.<br>Please try with a <a href="http://www.opera.com/next/">browser that has camera support</a>.</p>';
         //document.querySelector('[role=main]').innerHTML = errorMsg;
         console.log('Native web camera streaming (getUserMedia) is not supported in this browser.');
-        video.play();
     }
 	
 	function processFrame() {
