@@ -592,7 +592,7 @@ custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multi
                         <ol>
                         	<li>Compile the shader</li>
                             <li>Examine the data flow</li>
-                            <li>If a decision is made based on a pixel value, the shader is rejected</li>
+                            <li>If there is texture access, the shader is rejected</li>
                         </ol>
                      </section>
                      <section>
@@ -600,12 +600,8 @@ custom(url(shaders/vertex/crumple.vs) mix(url(shaders/fragment/crumple.fs) multi
                         <p><strong>YES!</strong></p>
                         <ul>
                         	<li>Information can be passed from vertex shaders</li>
-                            <li>Mix() function:
-                            	<ul>
-                                	<li>allows blending and compositing of pixel data with a color</li>
-                                    <li>specifies a color matrix</li>
-                                </ul>
-                            </li>
+                            <li>Mix() function specifies blending and compositing of the shader's result</li>
+                            <li>Shader can specify a color matrix</li>
                         </ul>
                      </section>  
                      <section>
