@@ -403,7 +403,7 @@
                     <h2 class="stamp-available">shorthand filters<br/><span class="code small">filter: &lt;short-hand-function&gt;(&lt;params&gt;)</span></h2>
                     <div>
                     	<div class="filter-sample  ">
-        			    	<div class="frame"><video width="120px" height="90px" id="filter-source" class="filter-image" onclick="filters_init()"></video></div>
+        			    	<div class="frame"><video width="120px" height="90px" id="filter-source" class="filter-image" onClick="filters_init()"></video></div>
         			        <p class="filter-shorthand code">original</p>
         			    </div>
         			    <div class="filter-sample  ">
@@ -449,7 +449,7 @@
                         </div> 
 <script>
 var canvases = document.getElementsByClassName('filter-test');
-
+intervalID = 0;
 function filters_init() {
     video = document.getElementById('filter-source');
     
@@ -465,25 +465,22 @@ function filters_init() {
             // Replace the source of the video element with the stream from the camera
             video.src = window.URL.createObjectURL(stream) || stream;
             video.play();
-			setInterval(processFrame, 33);
+			intervalID = setInterval(processFrame, 33);
         }
         function errorCallback(error) {
             console.error('An error occurred: [CODE ' + error.code + ']');
             video.play();
-			setInterval(processFrame, 33);
         }
     } else {
         var errorMsg = '<p class="error">Uh oh, it appears your browser doesn\'t support this feature.<br>Please try with a <a href="http://www.opera.com/next/">browser that has camera support</a>.</p>';
         //document.querySelector('[role=main]').innerHTML = errorMsg;
         console.log('Native web camera streaming (getUserMedia) is not supported in this browser.');
         video.play();
-		setInterval(processFrame, 33);
     }
 	
 	function processFrame() {
 		for (i=0;i<canvases.length;i++) {
 			copy = canvases[i].getContext('2d');
-			copy.drawImage(video, 0, 0, 120, 90);
 		}		
 	}
 }
@@ -595,6 +592,8 @@ function filters_init() {
 				for (i=0;i<videos.length;i++) {
 					videos[i].src = "";
 					videos[i].pause();	
+					clearInterval(intervalID);
+					intervalID = 0;
 				}				
 			});
 		</script>
