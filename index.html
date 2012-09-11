@@ -77,9 +77,11 @@
                     </section>  
                     <section>
                     	<h2>Effect of background alpha</h2>
-                        <div style="width: 800px; height: 380px; background: white;" >
-                            <div id="background-alpha" style="display: inline-block;width: 400px; height: 340px; background: green;margin: 20px 0 0 -50px"></div>
-                            <div class="circle" style="display: inline-block;background: magenta;margin: 10px 0 30px -180px;"></div>
+                        <p>Image is on top of the 2 rectangles</p>
+                        <div class="background-div" style="width: 800px; height: 380px; background: white;" >
+                            <div id="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: cyan;margin: 0 0"></div>
+                            <div id="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: magenta;margin: 0 0 0 0px"></div>
+                            <img src="assets/images/ducky.png" class="plain" style="display: inline-block;;margin: 0 0 0 -300px;-webkit-blend-mode: multiply;">
                          </div>
                          <p>Result = alpha x blendedColor + (1 - alpha) x original</p>
                     </section>                    

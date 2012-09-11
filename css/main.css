@@ -450,6 +450,11 @@ h2.stamp-public-prototype::before {
 	margin: 0 -180px;
 }
 
+.background-div > *
+{
+    vertical-align: middle;
+}
+
 #background-alpha, #alpha-src
 {
 -webkit-transition: opacity 4s;
