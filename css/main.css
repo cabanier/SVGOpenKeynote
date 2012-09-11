@@ -455,14 +455,16 @@ h2.stamp-public-prototype::before {
     vertical-align: middle;
 }
 
-#background-alpha, #alpha-src
+.background-alpha, #alpha-src, #gsave
 {
 -webkit-transition: opacity 4s;
 }
-#background-alpha:hover, #alpha-src:hover
+.background-alpha:hover, #alpha-src:hover
 {
-
 	opacity: 0;
+}
+#gsave:hover{
+	opacity: 0.5;
 }
 
 .prompt.button {
@@ -591,9 +593,9 @@ h2.stamp-public-prototype::before {
  pre.code {
   background-color: rgba(0, 0, 0, 0.6);
   /* Texture from http://subtlepatterns.com/?p=128 */
-  background-image: url(../assets/images/slides/exclusive_paper.png);
-  background-image: url(../assets/images/slides/groovepaper.png);
-  background-image: url(../assets/images/slides/exclusive_paper_light.png);
+  background-image: url(../assets/images/exclusive_paper.png);
+  background-image: url(../assets/images/groovepaper.png);
+  background-image: url(../assets/images/exclusive_paper_light.png);
   text-shadow: none;
   color: rgba(74, 80, 85, 0.5);
   text-shadow: none;

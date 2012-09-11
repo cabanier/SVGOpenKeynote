@@ -71,16 +71,16 @@
                          </ol>
                     </section>
                     <section>
-                    	<h2>Example of blending</h2>
+                    	<h2>Step 1: apply blending formula</h2>
                         <img src="assets/images/multiply.png">
                         <p>Alpha of source and background are ignored</p>
                     </section>  
                     <section>
-                    	<h2>Effect of background alpha</h2>
+                    	<h2>step 2:s account for background alpha</h2>
                         <p>Image is on top of the 2 rectangles</p>
                         <div class="background-div" style="width: 800px; height: 380px; background: white;" >
-                            <div id="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: cyan;margin: 0 0"></div>
-                            <div id="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: magenta;margin: 0 0 0 0px"></div>
+                            <div class="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: cyan;margin: 0 0"></div>
+                            <div class="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: magenta;margin: 0 0 0 0px"></div>
                             <img src="assets/images/ducky.png" class="plain" style="display: inline-block;;margin: 0 0 0 -300px;-webkit-blend-mode: multiply;">
                          </div>
                          <p>Result = alpha x blendedColor + (1 - alpha) x original</p>
@@ -218,8 +218,20 @@
 					</section>
                     <section>
                     <h2>Group compositing</h2>
-                    <p>Talk about shape buffer</p>
-                    <p>Show why it's needed. ie filters, clear blending</p>
+<pre class="code flipx small">
+01    <span class="highlight-3">&lt;rect ...&gt;</span>
+02    <span class="highlight-3">&lt;g id="gsave"&gt;</span>
+02        <span class="highlight-3">&lt;rect style="alpha-compositing: clear" ...&gt;</span>
+</pre>
+<pre class="code flipx small">
+.gsave: hover {opacity: .5};
+</pre>
+						<div class="fragment">
+                            <div class="background-div" style="width: 400px; height: 200px; background: white;text-align: center;margin:auto auto" >
+                                <div style="display: inline-block;width: 160px; height: 160px; background: blue;margin: 0 0"></div>
+                                <div id="gsave" style="display: inline-block;width: 80px; height: 80px; background: white;margin: 80px 0 0 -87px"></div>
+                            </div>
+                        </div>
                     </section>
                     <section>
                         <h2 class="stamp-public-prototype">Current status</h2>
