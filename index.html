@@ -46,15 +46,38 @@
 						<i><small>- <a href="http://http://html.adobe.com/">Rik Cabanier</a> / <a href="http://twitter.com/rcabanier">@rcabanier</a> </small></i>
 					</p>                    
 				</section>
-				
+                <section>
+                	<h1>Adobe's involvement</h1>
+                    <ul>
+                    	<li>Creating new tools</li>
+                        <li>Hosting and participating in conferences</li>
+                        <li>Be part of the standards process</li>
+                        <li>Work on specs that build Adobe's strengths
+                        	<ul>
+                            	<li>CSS Transforms</li>
+                                <li>CSS Regions and exclusions</li>
+                                <li>CSS Filters</li>
+                                <li>CSS Blending and compositing</li>
+                            </ul>
+                        </li>
+				</section>
 				<section>
                     <section>
                         <h2>Compositing and blending</h2>
                             <ul>
 	                             <li>Builds upon existing SVG spec</li>
                                  <li>Collaboration between Adobe and Canon</li>
-                                 <li>Contains all of PDF's blend modes. Widely use by <a href="http://html5please.com/">graphic</a> <a href="http://www.fremontoktoberfest.com/cms-assets/images/614516.420x420.jpg">designers</a></li>
+                                 <li>Contains all of blend modes. Widely use by <a href="http://html5please.com/">graphic</a> <a href="http://www.fremontoktoberfest.com/cms-assets/images/614516.420x420.jpg">designers</a></li>
                                  <li>Matches all the compositing modes in Canvas</li>
+                            </ul>
+                    </section>
+                    <section>
+                    	<h2>Why add this?</h2>
+                        	<ul>
+                            	<li>SVG filters are not as easy to use</li>
+                                <li>Not all blending modes are available in the filters spec</li>
+                                <li>Existing compositing spec only applied to SVG</li>
+                                <li>New spec breaks compositing and blending into 2 steps</li>
                             </ul>
                     </section>
                     <section>
@@ -71,19 +94,19 @@
                          </ol>
                     </section>
                     <section>
-                    	<h2>Step 1: apply blending formula</h2>
+                    	<h2>Step 1 + 2: apply blending formula</h2>
                         <img src="assets/images/multiply.png">
                         <p>Alpha of source and background are ignored</p>
                     </section>  
                     <section>
-                    	<h2>step 2:s account for background alpha</h2>
+                    	<h2>step 3: account for background alpha</h2>
                         <p>Image is on top of the 2 rectangles</p>
                         <div class="background-div" style="width: 800px; height: 380px; background: white;" >
                             <div class="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: cyan;margin: 0 0"></div>
                             <div class="background-alpha" style="display: inline-block;width: 200px; height: 380px; background: magenta;margin: 0 0 0 0px"></div>
                             <img src="assets/images/ducky.png" class="plain" style="display: inline-block;;margin: 0 0 0 -300px;-webkit-blend-mode: multiply;">
                          </div>
-                         <p>Result = alpha x blendedColor + (1 - alpha) x original</p>
+                         <p>Result = α x blendedColor + (1 - α) x original</p>
                     </section>                    
                     <section>
                     	<h2>Different blend modes</h2>
@@ -149,15 +172,16 @@
                     <section>
                     	<h2>Compositing</h2>
                         <ul>
-                        	<li>combines graphical objects (also known as shape)</li>
-                            <li>Works with the alpha channel</li>
-                            <li>Is a low level primitive for graphical effect</li>
+                        	<li>combines graphical objects (also known as shapes)</li>
+                            <li>Works with the alpha channel and premultiplied colors</li>
+                            <li>Is a low level primitive for graphical effects</li>
                             <li>Already part of the canvas specification</li>
                         </ul>
                     </section>  
                     <section>
                     	<h2>Simple alpha Compositing</h2>
                         <img src="assets/images/simplealpha.png">
+                        <p>Result = source + (1 - αs) x backdrop</p>
                     </section>
                     <section>
                     	<h2>Different blend modes</h2>
@@ -221,17 +245,34 @@
 <pre class="code flipx small">
 01    <span class="highlight-3">&lt;rect ...&gt;</span>
 02    <span class="highlight-3">&lt;g id="gsave"&gt;</span>
-02        <span class="highlight-3">&lt;rect style="alpha-compositing: clear" ...&gt;</span>
+03        <span class="highlight-3">&lt;circle ...&gt;</span>
+04        <span class="highlight-3">&lt;circle style="alpha-compositing: clear" ...&gt;</span>
 </pre>
 <pre class="code flipx small">
 .gsave: hover {opacity: .5};
 </pre>
 						<div class="fragment">
-                            <div class="background-div" style="width: 400px; height: 200px; background: white;text-align: center;margin:auto auto" >
+                            <div class="background-div" style="display: inline-block;width: 800px; height: 200px; background: white;text-align: center;margin:auto auto" >
+                            	<div style="display: inline-block;width: 160px; height: 160px; background: blue;margin: 0 0"></div>
+                                <p style="display: inline-block;"> + </p>
+                                <div style="display: inline-block;width: 160px; height: 80px; background: white;border-style:solid;border-color:#000000;margin: 80px 0 0 0"></div>
+                                <div class="circle " style="display: inline-block;width: 80px; height: 80px; background: red;margin: 80px 0 0 -167px;-webkit-blend-mode:normal"></div>
+                                <div class="circle " style="display: inline-block;width: 80px; height: 80px; background: white;margin: 80px 0 0 -7px;-webkit-blend-mode:normal"></div>
+                                <p style="display: inline-block;"> = </p>
                                 <div style="display: inline-block;width: 160px; height: 160px; background: blue;margin: 0 0"></div>
-                                <div id="gsave" style="display: inline-block;width: 80px; height: 80px; background: white;margin: 80px 0 0 -87px"></div>
+                                <div class="circle gsave" style="display: inline-block;width: 80px; height: 80px; background: red;margin: 80px 0 0 -167px;-webkit-blend-mode:normal"></div>
+                                <div class="circle gsave" style="display: inline-block;width: 80px; height: 80px; background: white;margin: 80px 0 0 -7px;-webkit-blend-mode:normal"></div>
                             </div>
                         </div>
+                    </section>
+                    <section>
+                    	<h2>The shape buffer</h2>
+                    <p>This is an extra channel that keeps track of the shape</p>
+                    <img src="assets/images/groupalpha.svg">
+                    </section>
+                    <section>
+                    <h2>Group isolation and knockout</h2>
+                    <img src="assets/images/knockout.svg" style="width: 150%">
                     </section>
                     <section>
                         <h2 class="stamp-public-prototype">Current status</h2>

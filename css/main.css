@@ -455,7 +455,7 @@ h2.stamp-public-prototype::before {
     vertical-align: middle;
 }
 
-.background-alpha, #alpha-src, #gsave
+.background-alpha, #alpha-src, .background-div, .gsave
 {
 -webkit-transition: opacity 4s;
 }
@@ -463,7 +463,7 @@ h2.stamp-public-prototype::before {
 {
 	opacity: 0;
 }
-#gsave:hover{
+.background-div:hover > .gsave {
 	opacity: 0.5;
 }
 
