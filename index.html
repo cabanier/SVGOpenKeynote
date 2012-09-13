@@ -171,6 +171,29 @@
 </script>            
                     </section>
                     <section>
+                    	<h2>Additions to canvas</h2>
+                        <p>Extend globalCompositeOperation to take blend modes</p>
+                    </section>
+                    <section>
+                    	<h2>Wait, there's more!</h2>
+                        <div class="fragment">
+                        	<p>We got many requests to<br/>add the 'missing' Photoshop blend modes</p>
+                            <div class="fragment">
+                                <p>So, we will add them as well:</p>
+                                <ul>
+                                    <li>Linear dodge</li>
+                                    <li>Linear burn</li>
+                                    <li>Vivid light</li>
+                                    <li>Linear light</li>
+                                    <li>Pin light</li>
+                                    <li>Hard mix</li>
+                                    <li>Divide</li>
+                                    <li>Subtract</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
                     	<h2>Compositing</h2>
                         <ul>
                         	<li>combines graphical objects (also known as shapes)</li>
@@ -286,16 +309,14 @@
 				</section>
                 <section>
                 	<section>
-                    	<h2>CSS masking</h2>
+                    	<h2 class="stamp-available">CSS masking</h2>
                         <ul>
                         	<li>standardize '-mask-image'</li>
                             <li>defines how the mask maps onto the CSS box model</li>
-                            <li>Allow arbitrary SVG shapes as clips</li>
+                            <li>Allow arbitrary SVG shapes or polygons as a hard clip</li>
                         </ul>
-                        <iframe width=”300″ height=”300″ frameborder=”0″ scrolling=”no” marginheight=”0″
-marginwidth=”0″
-src=”http://maps.google.com/maps?q=810+North+34th+Street,+Seattle,+WA,+United+States&hl=en&sll=37.0625,-95.677068&sspn=54.093296,101.513672&oq=810+n+34th+street,+sea&hnear=810+N+34th+St,+Seattle,+Washington+98103&t=m&z=16”>
-</iframe>
+                        <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=801+N+38th+street,+seattle+wa&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=54.093296,101.513672&amp;ie=UTF8&amp;hq=&amp;hnear=801+N+38th+St,+Seattle,+Washington+98103&amp;t=m&amp;z=14&amp;ll=47.652831,-122.348623&amp;output=embed" style="-webkit-clip-path: polygon(evenodd, 10px 175px, 350px 350px, 175px 10px, 10px 350px, 350px 175px, 10px 175px);"></iframe><p>clip-path: polygon(evenodd, 10px 175px, ...)</p>
+                        </section>
                 </section>
                 <section>
                 	<section>
